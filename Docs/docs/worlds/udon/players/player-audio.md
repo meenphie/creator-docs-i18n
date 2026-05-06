@@ -1,16 +1,11 @@
----
-title: "Player Audio"
-slug: "player-audio"
-hidden: false
-createdAt: "2020-09-24T22:05:44.842Z"
-updatedAt: "2023-01-10T00:35:37.776Z"
----
+# Player Audio
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 Players have two sources of audio: the voice coming through their microphone, and sounds attached to their Avatar. With Udon, you can change how a Player hears *other* players' voices and avatar sounds. For example, this code makes a player quieter by setting their gain to 5 dB (which is lower than the default of 15 dB):
 
-<Tabs>
+<Tabs groupId="udon-compiler-language">
 <TabItem value="graph" label="Udon Graph">
 
 ![Setting the player's voice gain in Udon Graph.](/img/worlds/player-audio-8e50220-setvoicegain.png)
@@ -19,7 +14,7 @@ Players have two sources of audio: the voice coming through their microphone, an
 <TabItem value="cs" label="UdonSharp">
 
 ```cs
-somePlayer.SetVoiceGain(15);
+somePlayer.SetVoiceGain(5);
 ```
 
 </TabItem>
@@ -27,7 +22,7 @@ somePlayer.SetVoiceGain(15);
 
 Here are all the properties you can access:
 
-# Voice
+## Voice
 
 ### Set Voice Gain
 *in Decibels, Range 0-24*
@@ -52,7 +47,7 @@ If you want a user's voice to sound like it is close no matter how far it is, in
 *On/Off*
 When a voice is some distance off, it is passed through a low-pass filter to help with understanding noisy worlds. You can disable this if you want to skip this filter. For example, if you intend for a player to use their voice channel to play a high-quality DJ mix, turning this filter off is advisable.
 
-# Avatar
+## Avatar
 
 ### SetAvatarAudioGain
 *in Decibels, Range 0-10*

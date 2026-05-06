@@ -1,15 +1,11 @@
----
-title: "Playable Layers"
-slug: "playable-layers"
-excerpt: "Create simple or complex animations for your VRChat avatar"
-hidden: false
-createdAt: "2020-08-05T22:29:37.898Z"
-updatedAt: "2023-02-06T14:15:33.627Z"
----
-When you create animations for your VRChat avatar, you'll utilize VRChat's 'Playable Layers.' They allow cleanly separate some things you might want to do with your avatar into their own animations - such as running, jumping, giving a thumbs-up, smiling, wagging your tail, and combinations of these.
+import UnityVersionedLink from '@site/src/components/UnityVersionedLink.js';
+
+# Playable Layers
+
+When you create animations for your VRChat avatar, you'll utilize VRChat's 'Playable Layers.' They allow you to cleanly separate some things you might want to do with your avatar into their own animations - such as running, jumping, giving a thumbs-up, smiling, wagging your tail, and combinations of these.
 :::caution Unity Knowledge Required
 
-This document is written with the assumption that you know a bit about [Unity Animators](https://docs.unity3d.com/2019.4/Documentation/Manual/class-AnimatorController.html).
+This document is written with the assumption that you know a bit about <UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/Manual/class-AnimatorController.html">Unity Animators</UnityVersionedLink>.
 :::
 
 In the Avatars 3.0 Avatar Descriptor, all humanoid avatars have five buttons:
@@ -29,6 +25,14 @@ These are **Playable Layers**. Each of them takes a Unity Animator, and they lay
 These layers apply in order-- in other words, Base gets applied, then Additive, then Gesture, Action, FX. For example, if something in Additive animates a bone (with 1.0 weight), and then something in Action animates that same bone (with 1.0 weight), the Action animation will take precedence.
 
 We have example Playable Layers available in the SDK. Depending on how you learn and iterate on things, it might be easier for you to use and edit these default layers to figure things out!
+
+They can be found in `Packages/com.vrchat.avatars/Samples/AV3 Demo Assets/Animation/Controllers`. Their names don't quite match the layer names:
+
+* Base: `vrc_AvatarV3LocomotionLayer`
+* Additive: `vrc_AvatarV3IdleLayer`
+* FX: `vrc_AvatarV3FaceLayer`
+* Action: `vrc_AvatarV3ActionLayer`
+* Gesture: `vrc_AvatarV3HandsLayer`
 
 When you are running VRChat and you're wearing (or viewing) an Avatar 3.0 avatar, all of these Playable Layers are put together into a combined Animator. This Animator is the root, main animator of your avatar, and you can control any part of it. **This means that there is no reason to add any additional animators on your avatar.** 
 
@@ -95,7 +99,7 @@ However, in the FX layer, everything is copied over! In other words, ***everythi
 
 The mask in the first FX layer, by default is empty, this will (at avatar init) create a default mask that disables all humanoid muscles, but enables all GameObject animations. This means that any animations in the hierarchy should work, although it is still NOT RECOMMENDED to animate transforms here.
 
-If you have non-muscle animations in your gestures (eg. your Gesture [mask](https://docs.unity3d.com/2019.4/Documentation/Manual/class-AvatarMask.html) has any transforms checked at the bottom) those same transforms must be DISABLED in your FX mask. This will allow your Gesture animations to "show through" the FX layer.
+If you have non-muscle animations in your gestures (e.g. your Gesture <UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/Manual/class-AvatarMask.html">mask</UnityVersionedLink> has any transforms checked at the bottom) those same transforms must be DISABLED in your FX mask. This will allow your Gesture animations to "show through" the FX layer.
 
 :::info Example
 

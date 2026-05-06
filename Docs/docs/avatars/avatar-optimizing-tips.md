@@ -12,7 +12,7 @@ Do you want your avatar to be efficient and be loved by everyone because of all 
 
 Any recommended numbers or limits in this document are subject to change at any time. Although some of the descriptions provided below are not precise in a technical manner, this document is intended to assist novice users in learning how to optimize their avatars.
 
-Community-created tools like [Cats Blender Plugin](https://github.com/michaeldegroot/cats-blender-plugin) (MIT license) allow users to very easily optimize their models and assist with common VRChat avatar problems. We strongly recommend using tools like this! It makes your job easier, and improves performance for all.
+Community-created blender plugins like [Cats](https://catsblenderplugin.xyz/) or [Tuxedo](https://github.com/feilen/tuxedo-blender-plugin) allow users to very easily optimize their models and assist with common VRChat avatar problems. We strongly recommend using tools like this! It makes your job easier, and improves performance for all.
 
 As a sidenote, the SDK's Build Control panel provides numbers of components on avatars to help with optimization.
 
@@ -25,9 +25,16 @@ In addition, you should [optimize your content for Android](/platforms/android/q
 ## Do not use Dynamic Bones!
 Dynamic Bones is a Unity Asset that you can purchase that allows you to define bones on your avatar's rig to move around as if they were hanging. You can also define static forces like gravity which can make hair fall more realistically. 
 
-Dynamic Bones is deprecated and will be removed eventually. Use [PhysBones](/avatars/avatar-dynamics/physbones) instead.
+Dynamic Bones is deprecated and will be removed eventually. Use [PhysBones](/common-components/physbones) instead.
 
 VRChat will automatically convert Dynamic Bones to PhysBones at runtime.
+
+## Do not use Unity Constraints!
+[Unity Constraints](https://docs.unity3d.com/Manual/Constraints.html) are components provided by the engine that allow you to change the position, rotation and scale of transforms on your avatar based on one or more other transforms.
+
+The engine's constraints are sorted based on the dependencies between them every frame, which means they can cause significant performance problems when enough of them exist at once. Use [VRChat Constraints](/common-components/constraints) instead, because they're designed to provide better performance in the context of VRChat avatars.
+
+VRChat will automatically convert Unity constraints to VRChat constraints at runtime.
 
 ## Limit usage of Cloth
 Cloth is a default Unity component that has a similar cost to Dynamic Bones and is more difficult to set up. Limit your use of Cloth heavily, and do not apply it to meshes that have greater than 200 or so vertices.
@@ -53,7 +60,7 @@ As an aside, what is important is the number of **material slots on the Renderer
 
 This is due to the way that Unity splits meshes into submeshes. What really matters for performance is the number of submeshes created, which Unity creates based on Material slots.
 
-<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/5LwRi26RxSQ?si=_TuNCYuWLrsWrVIm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="854" height="480" src="https://www.youtube-nocookie.com/embed/5LwRi26RxSQ?si=_TuNCYuWLrsWrVIm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen" allowfullscreen="true"></iframe>
 
 ## Watch your VRAM usage!
 
@@ -65,11 +72,12 @@ For example: A 30 MB avatar *can* use 3 GB of VRAM if it uses inefficient high-r
 
 Check out [Poiyomi's Texture Optimization guide](https://www.poiyomi.com/blog/2022-10-17-texture-optimization). It's an excellent and comprehensive guide on how to optimize your avatar's textures.
 
-## Avoid expensive shaders
+## Use Optimized Shaders
 Some shaders can cause excessive time spent rendering on the GPU. Try to stick with the Unity Standard shaders, or shaders that you know perform well. If you don't know how to tell if a shader is well-optimized, that's fine! Here are some examples-- these certainly aren't all the shaders available, but are all well-made and well-optimized with a variety of features.
-  * [Xiexe's "XSToon" Unity Shaders](https://github.com/Xiexe/Xiexes-Unity-Shaders) (MIT) - A collection of PBR 'Toon' shaders for Unity.
-  * [Silent's Shaders](https://gitlab.com/s-ilent/SCSS) (MIT) - Shaders for Unity for cel shading, originally based off the discontinued CubedParadox's Flat Lit Toon, featuring a number of handy features.
-  * [Poiyomi's Toon Shader](https://github.com/poiyomi/PoiyomiToonShader/releases) (MIT) - A very robust, powerful shader with a lot of options. 
+* VRChat's SDK includes various shaders optimized for mobile devices, such as 'Standard Lite.'
+* [Xiexe's "XSToon" Unity Shaders](https://github.com/Xiexe/Xiexes-Unity-Shaders) (MIT) - A collection of PBR 'Toon' shaders for Unity.
+* [Silent's Shaders](https://gitlab.com/s-ilent/SCSS) (MIT) - Shaders for Unity for cel shading, originally based off the discontinued CubedParadox's Flat Lit Toon, featuring a number of handy features.
+* [Poiyomi's Toon Shader](https://github.com/poiyomi/PoiyomiToonShader/releases) (MIT) - A very robust, powerful shader with a lot of options. 
 
 ### Minimize Excess Shader Passes
 Speaking more technically, you want to avoid shaders that have excess shader passes. This incurs additional draw calls. This might be a bit too much for most users to worry about, so if you stick with commonly used and proven community shaders, that should suffice.

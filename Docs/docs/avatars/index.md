@@ -1,15 +1,14 @@
 ---
-title: "Avatars"
-excerpt: "Learn about VRChat's Avatars 3.0 SDK"
-hidden: false
-createdAt: "2020-07-08T17:39:44.315Z"
-updatedAt: "2023-04-03T18:46:53.072Z"
 sidebar_position: 0
 ---
 
-VRChat allows you to create and upload custom avatars!
+import UnityVersionedLink from '@site/src/components/UnityVersionedLink.js';
 
-# Creating Avatars
+# Avatars
+
+VRChat allows you to create and upload custom avatars! This category explains how to use VRChat's Avatars 3.0 SDK.
+
+## Creating Avatars
 
 To get started, check out [Creating your first avatar](/avatars/creating-your-first-avatar).
 
@@ -37,7 +36,7 @@ In order to understand and use Avatars 3.0, you need to know a few concepts. The
 
 ### Unity Systems
 
-This document is written with the assumption that you know a bit about [Unity Animators](https://docs.unity3d.com/2019.4/Documentation/Manual/class-AnimatorController.html). In particular, you should ensure you have basic working knowledge of:
+This document is written with the assumption that you know a bit about <UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/Manual/class-AnimatorController.html">Unity Animators</UnityVersionedLink>. In particular, you should ensure you have basic working knowledge of:
 
 - Animators and animations
 - Animator layers, layer weights, and blending
@@ -72,15 +71,20 @@ However, even with these basic upgraded systems, there are some new features.
 
 ### Local Avatar Testing
 
-Ever wanted to iterate and test an avatar without uploading it? Well, with Avatars 3.0, now you can!
+This feature allows you to iterate and test an avatar without uploading it to VRChat.
 
-In the "Builder" tab of VRChat SDK control panel, you can now select "Build & Test" at "Offline Testing" section. When you click this, your avatar will be built, and then copied into a folder.
+In the "Builder" tab of the VRChat SDK control panel, you can now select "Build & Test" in the "Offline Testing" section. When you click this, your avatar will be built, and then copied into the the following folder:
 
-When you launch VRChat, you'll be able to access this avatar locally by looking in the "Other" section of the Avatar menu! Only you will be able to see it, but you can make changes to your avatar, click "Build & Test" again, and after a short build, your avatar will be updated. Simply re-select the avatar in your menu and click "Change" again, and you'll swap into the new testing avatar.
+- Windows: `%LocalAppdata%Low\VRChat\VRChat\Avatars`
+- Linux: `$HOME/.local/share/VRChat/VRChat/Avatars/`
 
-This avatar is _only_ visible to you! To everyone else, you'll look like you're wearing the last avatar you were wearing before swapping into the local test avatar. For our AV3 testers, this made iteration a TON faster. We hope you like it!
+When you launch VRChat, you'll be able to access this avatar locally by looking in the "SDK Test Avatars" section of the Avatar menu. When you make changes to your avatar and build it again, your avatar will be updated; simply re-select the avatar in your menu and click "Apply" again, and you'll swap into the new testing avatar.
 
-To delete the copied local test avatar, go to "Content Manager" tab of the VRChat SDK control panel. You will see your avatar in "Test Avatars" section at the bottom. Click "Delete" and it will disappear from "Other" section of the Avatar menu when you reopen it.
+Alternatively, if you launch VRChat with the `--watch-avatars` launch option, VRChat will monitor for newly built local avatars and switch you to them automatically.
+
+Locally built avatars are _only_ visible to you! To everyone else, you'll look like you're wearing the last avatar you were wearing before swapping into the local test avatar. This can make iterating on avatars a TON faster. We hope you like it!
+
+To delete the copied local test avatar, go to "Content Manager" tab of the VRChat SDK control panel. You will see your avatar in "Test Avatars" section at the bottom. Click "Delete" and it will disappear from the "SDK Test Avatars" section of the Avatar menu when you reopen it.
 
 ### Simulated Eye Movement
 
@@ -138,7 +142,7 @@ When "Locomotion Animations" is off, locomoting in FBT will NOT play the walking
 
 ### Write Defaults on States
 
-[Write Defaults](https://docs.unity3d.com/2019.4/Documentation/Manual/class-State.html) is an option available for each state in an Animator Controller.
+<UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/Manual/class-State.html">Write Defaults</UnityVersionedLink> is an option available for each state in an Animator Controller.
 
 Write Defaults "Off" states will set only the animated property values, and those values will not change unless animated again. This can make it easier to keep track of what properties are animated through any specific layer.
 

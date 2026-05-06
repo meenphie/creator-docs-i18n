@@ -1,10 +1,3 @@
----
-title: "Realtime Midi"
-slug: "realtime-midi"
-hidden: false
-createdAt: "2023-02-16T02:10:03.798Z"
-updatedAt: "2023-02-16T02:10:03.798Z"
----
 # Realtime Midi
 
 You can use MIDI devices to control your Udon world in realtime using MIDI Notes and controller changes.
@@ -35,5 +28,4 @@ VRChat will match partial names and ignore capitalization. Learn about all other
 
 ## Example Scene
 
-You can download a demo scene that reads and displays all three message types here: [Demo Scene Download](https://www.dropbox.com/s/83zili4e8lkszu7/MidiCubeExample_v4.unitypackage)
-You can visit the world here: [Udon Midi Test](https://vrchat.com/home/world/wrld_f8bc6485-dcdf-4646-89d8-14e4772561ee).
+Visit the  [Udon Midi Test](https://vrchat.com/home/world/wrld_f8bc6485-dcdf-4646-89d8-14e4772561ee) example world that reads and displays all three message types.

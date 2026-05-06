@@ -1,11 +1,5 @@
----
-title: "String Loading"
-slug: "string-loading"
-excerpt: "Load text files from the internet in your VRChat worlds"
-hidden: false
-createdAt: "2023-02-07T01:10:57.067Z"
-updatedAt: "2023-03-26T00:35:05.784Z"
----
+# String Loading
+
 String Loading allows you to download text files from the internet and use them in your VRChat world. You can either use the `DownloadString` script included in the SDK, or you can make your own script using the new `VRCStringDownloader.LoadUrl` function.
 
 - Your text files can be in any format, such as `.txt` or `.json`.
@@ -14,17 +8,22 @@ If this limit is exceeded, string downloads are queued and downloaded in a rando
 * One string can only be of a maximum of 100MB
 * You can only have 1000 elements in the queue
 
-# Trusted URLs
+## Trusted URLs
 If a site is not on the list, it will not download unless ‘Allow Untrusted URLs’ has been enabled in the user’s settings.
 
 The following URLs are available:
 
+* Disbridge (`*.disbridge.com`)
 * GitHub (`*.github.io`)
-* Pastebin (`pastebin.com`)
 * Github Gist (`gist.githubusercontent.com`)
+* Pastebin (`pastebin.com`)
+* VRCDN (`*.vrcdn.cloud`)
 
-# Guides
-## Using the `DownloadString` script to download a string
+## Guides
+
+There are multiple ways to use string loading in your world.
+
+### Using the `DownloadString` script to download a string
 The SDK includes a script to download strings easily:
 
 1. Create a new GameObject in your scene.
@@ -32,14 +31,16 @@ The SDK includes a script to download strings easily:
 3. Select `DownloadString` as the program source.
 4. Enter the URL and select the text component where you'd like to display the downloaded text.
 
-## Create your own script for LoadUrl
-You can use the function `VRCStringDownloader.LoadUrl` to download Strings in your own graphs.
+### Create your own script for LoadUrl
+You can use the function `VRCStringDownloader.LoadUrl` to download strings in your own scripts by following these steps:
 
 1. Execute `VRCStringDownloader.LoadUrl` with a URL and specify an UdonBehaviour.
+	- You can find `VRCStringDownloader` in the `VRC.SDK3.StringLoading` namespace.
 2. Wait for the `OnStringLoadSuccess` or `OnStringLoadError` event to be called on the specified UdonBehaviour.
-3. Use the event's `IVRCStringDownload` to get the `Result` of the string download. 
-# New UdonGraph Nodes
+3. Use the event's `IVRCStringDownload` to get the `Result` of the string download.
+
 ## New events
+
 ### OnStringLoadSuccess
 Returns `IVRCStringDownload`. Called when the function `LoadUrl` has successfully downloaded the string from the internet.
 
@@ -68,7 +69,7 @@ Result from the string load events.
 * **Get UdonBehaviour (`UdonBehaviour`)**: The UdonBehaviour to which events are sent.
 * **Get Url (`VRCUrl`)**: Gets the URL from which the download was attempted.
 
-### Example Code
+## Example Code
 
 ```csharp title="String Download Example, Custom Text Encoding"
 using System.Text;

@@ -3,20 +3,8 @@ title: "Video Player Allowlist"
 slug: "www-whitelist"
 hidden: false
 createdAt: "2020-09-10T18:56:07.748Z"
-updatedAt: "2023-03-09T22:55:53.659Z"
+updatedAt: "2024-06-28T22:55:53.659Z"
 ---
-:::note
-
-VRChat on Quest can play videos from direct links to video files. These URLs typically end with a filename ending in a supported video type like http://something.com/video.mp4 or http://test.com/cats.webm. If you visit the link and see a whole website around a video, that link will probably not play on Android / Quest because the application that VRChat uses to resolve these links into videos does not run on Android.  Creators will need to move the video to a host that supports direct links, or find another way to work around this issue.
-
-Some workarounds exist for advanced users. VRChat has not reviewed these methods, does not condone them, and cannot guarantee their continued operation, but they have been recommended by suggested edits to our documentation.
-
-* [Streamlink](https://streamlink.github.io)
-* [ArchiTechAnon's "Understanding URLs in VRChat" post](https://ask.vrchat.com/t/protv-by-architechanon-usage-guides-and-walkthroughs/7029/11)"
-
-Future updates may improve this functionality.
-
-:::
 
 The following services are on the video player allowlist.
 
@@ -39,13 +27,16 @@ The services listed below are inherently trusted and are permitted with our defa
 
 | Service | Domain |
 | --- | --- |
-| --- | --- |
-| Soundcloud | `soundcloud.com` |
-| Facebook Video | `*.facebook.com` |
+| Akamai CDN | `vod-progressive.akamaized.net` |
+| Facebook Video | `*.facebook.com`,`*.fbcdn.net` |
+| Google Video | `*.googlevideo.com` |
+| Hyperbeam | `*.hyperbeam.com`,`*.hyperbeam.dev` |
+| Mixcloud | `*.mixcloud.com` |
 | NicoNico | `*.nicovideo.jp` |
-| Twitch.TV | `*.twitch.tv` |
+| Soundcloud | `soundcloud.com`,`*.sndcdn.com` |
+| Topaz Chat | `*.topaz.chat` |
+| Twitch.TV | `*.twitch.tv`,`*.ttvnw.net`,`*.twitchcdn.net` |
+| VRCDN | `*.vrcdn.live`,`*.vrcdn.video`,`*.vrcdn.cloud` |
 | Vimeo | `*.vimeo.com` |
 | Youku | `*.youku.com` |
 | YouTube | `*.youtube.com`,`youtu.be` |
-| VRCDN | `*.vrcdn.live`,`*.vrcdn.video` |
-| Topaz Chat | `ciel.topaz.chat` |

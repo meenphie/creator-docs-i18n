@@ -1,19 +1,23 @@
 ---
-title: "Quest Content Limitations"
+title: "Android Content Limitations"
 slug: "quest-content-limitations"
 hidden: false
 createdAt: "2019-05-15T01:40:38.749Z"
 updatedAt: "2022-07-04T09:34:33.253Z"
 ---
-This page will describe various limits in place for the Oculus Quest version of VRChat. These limitations are in place in the interest of performance, user safety, and discouraging malicious behavior.
+This page will describe various limits in place for the Android version of VRChat. These limitations are in place in the interest of performance, user safety, and discouraging malicious behavior.
 
-Find more information about limited components on our [Quest Content Optimization](/platforms/android/quest-content-optimization) page.
+Find more information about limited components on our [Android Content Optimization](/platforms/android/quest-content-optimization) page.
+
 ## Avatar-Specific Limitations
-Although the current version of VRChat does not implement a hard limit, **we may implement a hard limit for avatars based on triangle count, material counts, mesh counts, and other qualities in the future.** Please keep our recommendations in mind as described in [Quest Content Optimization](/platforms/android/quest-content-optimization).
+
+Although the current version of VRChat does not implement a hard limit, **we may implement a hard limit for avatars based on triangle count, material counts, mesh counts, and other qualities in the future.** Please keep our recommendations in mind as described in [Android Content Optimization](/platforms/android/quest-content-optimization).
 
 Currently, if you upload an avatar or avatar world that features avatars exceeding our recommendations, that world or avatar may be removed from public access.
+
 ## Shaders
-VRChat on Quest only permits the shaders provided with the latest SDK on avatars. The shaders are listed below with a short description and their inputs. This list may change, and we'll announce in our patch notes when new shaders are available.
+
+VRChat on Android or Quest only permits the shaders provided with the latest SDK on avatars. The shaders are listed below with a short description and their inputs. This list may change, and we'll announce in our patch notes when new shaders are available.
 
 All of the shaders listed below are under `VRChat/Mobile` in the shader selection dialog.
 
@@ -21,7 +25,8 @@ All of the shaders listed below are under `VRChat/Mobile` in the shader selectio
 
 | Shader Name                | Shader Description |
 | :-- | :-- |
-| Standard Lite              | A "Lite" version of Unity Standard, designed to require less VRAM. Channel mappings and supported maps are identical to Unity Standard Metallic setup, excluding Alpha and Parallax. Not currently reccomended on PC as it does not support realtime lighting. The diffuse texture is tinted by the vertex colours. |
+| Toon Standard              | The most powerful and configurable Toon-style shader available for VRChat on mobile platforms. It is recommended for most cases where Standard Lite is not the right choice. It supports features such as: <ul> <li>Detail and Emission maps from UV0 or UV1.</li> <li>Custom shadow ramps, configurable simplified specular lighting, rim lighting and Matcaps.</li> <li>Maskable hue-shift for albedo, emission and detail.</li> <li>Normal maps including tilable and maskable detail normals.</li> <li>Mask textures with configurable color channels for combining multiple maps into different packed formats.</li> </ul> Note: The "Outline" version is only supported on PC, mobile devices will fall back to the non-outline variant automatically. You can use this shader on PC avatars as well, although it does not support realtime shadows at this time. |
+| Standard Lite              | A "Lite" version of Unity Standard that requires less VRAM. <ul> <li> Supports the channel mappings of Unity's Standard Metallic setup, except Alpha and Parallax. </li> <li> The diffuse texture is tinted by the mesh's vertex colors. </li> <li> You can optimize different channels by packing them into the same texture: <ul> <li> Texture 1: Albedo (RGB) and Detail Mask(A) </li> <li> Texture 2: Metallic (R), Occlusion (G), and Smoothness (A) </li> </ul> </li> <li> Not recommended on PC because it does not support real-time lighting. </li> </ul> |
 | Bumped Diffuse             | Diffuse but with a normal map. The diffuse texture is tinted by the vertex colours.                                                                                                                                                                                 |
 | Bumped Mapped Specular     | Diffuse, but with a specular map (shininess) on the alpha channel. The diffuse texture is tinted by the vertex colours. Normal map also supported.                                                                                                                |
 | Diffuse                    | Just diffuse! The diffuse texture is tinted by the vertex colours.                                                                                                                                                                                                 |
@@ -35,18 +40,18 @@ All of the shaders listed below are under `VRChat/Mobile` in the shader selectio
 
 ## Components
 
-The following components are not supported on Quest and will not work. This list may change. We'll note in the Patch Notes and updated documentation when these change.
+The following components are not supported on Android or Quest and will not work. This list may change. We'll note in the Patch Notes and updated documentation when these change.
 
 | Shader Name                | Shader Description |
 | :-- | :-- |
-| Dynamic Bones              | Completely disabled in VRChat Quest. Use [PhysBones](/avatars/avatar-dynamics/physbones) instead!! |
-| Cloth                      | Completely disabled in VRChat Quest. |
-| Cameras                    | Completely disabled on avatars in VRChat Quest. Permitted for use in Worlds. Be careful with overuse. |
-| Lights                     | Completely disabled on avatars in VRChat Quest. |
+| Dynamic Bones              | Completely disabled on Android and Quest. Use [PhysBones](/common-components/physbones) instead!! |
+| Cloth                      | Completely disabled on Android and Quest. |
+| Cameras                    | Completely disabled for avatars on Android and Quest. Permitted for use in Worlds. Be careful with overuse. |
+| Lights                     | Completely disabled for avatars on Android and Quest. |
 | Video Players | Works with some limitations. Read more in [Video Players](/worlds/udon/video-players). |
-| Post-Processing | Post processing systems are disabled completely in VRChat Quest. The GPU is not designed to handle these effects very well. |
-| Audio Sources | Audio sources are disabled completely on avatars in VRChat Quest. Audio sources consume a significant amount of CPU resources and voices have priority. |
-| Physics Objects | Rigidbodies, colliders, and joints are disabled completely on avatars in VRChat Quest. <br /> They are permitted in worlds, but you should be careful not to go overboard with them. |
-| Particle Systems | Particles are limited heavily on avatars in VRChat Quest, with settings mirroring the [Avatar Particle System Limits](https://docs.vrchat.com/docs/avatar-particle-system-limits) on PC. |
-| Constraints | Constraints are disabled completely on avatars in VRChat Quest. There are no plans to enable them for Quest, as they have complex performance issues that are not solved by a soft or hard limit.<br /><br />Permitted for use in Worlds. Be careful with overuse, as they impact performance more than previously thought, especially with the limited resources of the Quest. |
-| FinalIK | Custom FinalIK components are completely disabled on avatars in VRChat Quest.<br />FinalIK components are an unbounded source of resource usage. We do not currently plan to enable them on Quest. |
+| Post-Processing | Post processing systems are disabled completely on Android and Quest. The GPU is not designed to handle these effects very well. |
+| Audio Sources | Audio sources are disabled completely for avatars on Android and Quest. Audio sources consume a significant amount of CPU resources and voices have priority. |
+| Physics Objects | Rigidbodies, colliders, and joints are disabled completely for avatars on Android and Quest. <br /> They are permitted in worlds, but you should be careful not to go overboard with them. |
+| Particle Systems | Particles are limited heavily on avatars for Android and Quest, with settings mirroring the [Avatar Particle System Limits](https://docs.vrchat.com/docs/avatar-particle-system-limits) on PC. |
+| Constraints | Unity constraints are disabled completely for avatars on Android and Quest due to complex performance issues. Use [VRChat Constraints](/common-components/constraints) instead.<br /><br />Permitted for use in Worlds. Be careful with overuse, as they impact performance more than previously thought, especially with the limited resources of Quest and mobile devices. |
+| FinalIK | Custom FinalIK components are completely disabled for avatars on Android and Quest.<br />FinalIK components are an unbounded source of resource usage. We do not currently plan to enable them on these platforms. |

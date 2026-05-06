@@ -1,11 +1,25 @@
 ---
-title: "Getting Started"
+description: "Set up Tilia and create your first store."
 sidebar_position: 1
+sidebar_custom_props:
+    customIcon: 💡
 ---
 
 import SellerNotification from '/docs/economy/_sellers-notification.mdx';
 
+# Getting Started With Tilia
+
 <SellerNotification/>
+
+Before you can use the Creator Economy, you need to request authorization from Tilia, VRChat's payment partner. Tilia ensures that you have a safe selling experience by verifying your identity, complying with local laws, and detecting fraud.
+
+To get started, watch the video or read the steps below:
+
+:::warning
+
+The video below explains how to use the Creator Economy and group stores. To learn about world stores and the avatar marketplace, please read our [stores documentation](/economy/store/).
+
+:::
 
 <iframe
     width="100%"
@@ -16,28 +30,50 @@ import SellerNotification from '/docs/economy/_sellers-notification.mdx';
     allow="clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen>
 </iframe>
 
-Before you can begin selling or earning in VRChat, you’ll also need to complete a few easy steps with our payment partner, Tilia. Tilia helps comply with local laws and prevent fraud so you can have a safe selling experience.
+<div class="video-container">
+    <iframe src="https://www.youtube.com/embed/NuRPDYrYhSM?si=NZblzqFKR7r1OG0E" title="VRChat Creator Companion" frameborder="0" allow="encrypted-media; gyroscope; web-share" allowfullscreen></iframe>
+</div>
 
-## Seller Onboarding
+## Step 1 - Open My Store
 
-To start seller onboarding, you'll need to supply Tilia with some personal information (Personal Identifying Information, or PII):
-
-1. Go to the **Marketplace** tab in the left-hand sidebar and click **Storefront**.
+Open [VRChat.com](https://vrchat.com/home), go to the [My Store](https://vrchat.com/home/marketplace/) tab in the left-hand sidebar, and open your [Storefront](https://vrchat.com/home/marketplace/storefront).
 
 ![Marketplace](/img/economy/GettingStarted-Marketplace.png "Navigate to the Storefront Tab")
 
-2. If you have not purchased **VRChat Plus** at least once in the past, you will be asked to do that now.
+## Step 2 - Get Started
 
-![VRChat Plus Requirement](/img/economy/GettingStarted-Storefront-VRChatPlus.png "VRChat Plus is required to sell in the Creator Economy")
+Click **Get Started with Tilia**.
 
-3. Click on **Review Tilia's Terms of Service**.
+## Step 3 - Verify Identity
 
-![Review Tilia TOS](/img/economy/GettingStarted-Storefront-ReviewTiliaTOS.png "Click here to Review Tilia's terms")
-
-4. Make sure to check **"I agree"** after reading Tilia's **Terms of Service** and **Privacy Policy**. Then, go ahead and verify your information by filling out the following section.
+Make sure to check **"I agree"** after reading Tilia's **Terms of Service** and **Privacy Policy**. Then, go ahead and verify your information by filling out the following section and submitting it.
 
 ![Tilia Page](/img/economy/GettingStarted-Tilia.png "Reviewing Tilia's terms and verifying information.")
 
-5. Once done, the **Storefront** page will now show that you are **Authorized** to sell in VRChat! Any credits earned from now on will be eligable for Payout. 
+Ensure that your personal information is correct! Otherwise, you may not be able to use the Creator Economy.
+
+## Step 4 - Wait
+
+Wait for your Tilia to accept your information. This usually takes around 5 business days, but may rarely take up to 30 calendar days.
+
+:::info
+
+If it takes Tilia longer to accept you than expected, please try the following these steps:
+
+- Repeat [Step 2](#step-2---get-started) and click "Get Started with Tilia" again.
+	- Tilia may have already accepted you. If that's the case, clicking "Get Started" may cause VRChat to check your acceptance and redirect you to the Storefront page.
+- Check your inbox.
+	- You may have already been accepted, or there may be an issue. Tilia may reach out to you via Email 
+- If you continue experiencing technical problems, please contact Tilia or VRChat.
+
+:::
+
+## Step 5 - Accepted
+
+Once you've been accepted, the **Storefront** page will now show that you are **Authorized** to sell in VRChat! Any credits earned from now on will be eligible for [payout](/economy/payout). 
 
 ![Now Authorized](/img/economy/GettingStarted-Storefront-Authorized.png "Authorized to sell in VRChat")
+
+You're now ready to create [products](./products), [subscriptions](./subscriptions), [listings](./listings), and [stores](./store)!
+
+Once you've earned enough credits, you can [pay out] your earnings and connect your PayPal account. 

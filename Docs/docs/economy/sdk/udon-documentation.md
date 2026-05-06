@@ -1,7 +1,13 @@
 ---
-title: Udon Documentation
+description: "All Udon types, methods, and events related to the Creator Economy."
 sidebar_position: 4
+sidebar_custom_props:
+    customIcon: 🛠
 ---
+
+import UnityVersionedLink from '@site/src/components/UnityVersionedLink.js';
+
+# Udon Documentation
 
 import SellerNotification from '/docs/economy/_sellers-notification.mdx';
 
@@ -14,10 +20,10 @@ This page documents all Udon types, methods, and events related to the VRChat Cr
 VRChat's SDK contains objects types to support the management of Udon products that your customers can purchase.
 
 ### UdonProduct
-UdonProduct is a [ScriptableObject](https://docs.unity3d.com/2019.4/Documentation/Manual/class-ScriptableObject.html) that you can create in your project. It represents a product from your store, allowing you to interact with it in Udon.
+UdonProduct is a <UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/Manual/class-ScriptableObject.html">ScriptableObject</UnityVersionedLink> that you can create in your project. It represents a product from your store, allowing you to interact with it in Udon.
 A world will only receive events based on products that are being used within it, therefore it is necessary to reference a product's UdonProduct equivalent in any UdonBehaviour at least once before uploading.
 
-For example, even if you don't directly use the UdonProducts anywhere, you would need to have an array of UdonProducts on at least one UdonBehaviour somewhere in the scene to receive OnPurchaseConfirmed, OnPurchaseExpired or OnPurchasesLoaded events for those products across all UdonBehaviours.
+For example, even if you don't directly use the UdonProducts anywhere, you would need to have an array of UdonProducts on at least one UdonBehaviour somewhere in the scene to receive OnPurchaseConfirmedMultiple, OnPurchaseExpired or OnPurchasesLoaded events for those products across all UdonBehaviours.
 
 UdonProducts can be created with the UdonProductManager ("VRChat SDK" → "UdonProduct Manager") or by creating an UdonProduct asset manually ("Assets" → "Create" → "VRChat" → "UdonProduct").
 
@@ -76,7 +82,7 @@ UdonProduct's and IProduct's "Name" & "Description" fields are currently filled 
 The SDK contains methods for interacting with player purchases or VRChat's store pages. These methods can be found under the 'Store' namespace.
 
 ### Store.DoesPlayerOwnProduct
-This method will check if a player owns a certain product.
+This method checks if a player owns a certain product.
 
 **Input**
 - `VRCPlayerApi`: Player that you want to check the product ownership of.
@@ -85,13 +91,14 @@ This method will check if a player owns a certain product.
 **Output**
 - `bool`: `true` if the player owns the product, otherwise `false`.
 
-:::caution Race condition
+:::caution
 
-It is not advised to use this immediately after the "Start" event. Udon may not have received players purchases yet. It is advised to use the [OnPurchasesLoaded](#onpurchasesloaded) event instead.
+Do not use `Store.DoesPlayerOwnProduct` immediately after the `Start` event because Udon may not have received players purchases yet. To avoid race conditions, use the [OnPurchasesLoaded](#onpurchasesloaded) event instead.
+
 :::
 
 ### Store.DoesAnyPlayerOwnProduct
-This method will check if any player in the instance owns a certain product.
+This method checks if any player in the instance owns a certain product.
 
 **Input**
 - `UdonProduct` or `IProduct`: Product that you want to check the ownership of.
@@ -100,13 +107,16 @@ This method will check if any player in the instance owns a certain product.
 - `bool`: `true` if any player in the instance owns the product, otherwise `false`.
 
 ### Store.GetPlayersWhoOwnProduct
-This method will get all the players who own a certain product.
+This method gets all the players in the instance who own a certain product.
 
 **Input**
 - `UdonProduct` or `IProduct`: Product that you want to check the ownership of.
 
 **Output**
-- `VRCPlayerApi[]`: An array of players that own this product.
+- `VRCPlayerApi[]`: An array of players in the instance that own this product.
+
+### Store.OpenWorldStorePage
+Opens a the world store page of the current world, if it has one.
 
 ### Store.OpenGroupPage
 Opens a group's **Group Info** page in VRChat's main menu.
@@ -122,11 +132,27 @@ Opens a group's **Store** page in VRChat's main menu.
 - `string`: ID of a group (i.e. `grp_00000000-0000-0000-0000-000000000000`)
   - To find the group ID, open the group on VRChat.com and copy the ID from your browser's address bar.
 
-### Store.OpenGroupListing
-Opens a specific **listing** on a group's Store page.
+### Store.OpenListing
+Opens the purchase screen of a [listing](/economy/listings) in VRChat's main menu.
+
+You can open any of your activated listings, even if you didn't add it to your group [store](/economy/store) or world [store](/economy/store).
 
 **Input**
 - `string`: ID of the listing (i.e. `prod_00000000-0000-0000-0000-000000000000`)
+
+### Store.OpenMarketplaceStore
+Opens a section of the marketplace store in the VRChat main menu, optionally opening the details page of a [listing](/economy/listings) within that section.
+
+For group or world stores, you can open any published listing if you also specify the group ID or world ID associated with any [store](/economy/store) that contains your listing.
+
+**Input**
+- `string`: Marketplace section that you want to open to.
+  - `vrchat` opens the "Exclusive" section.
+  - `avatar` opens the "Avatars" section.
+  - `world` opens the "World Stores" section.
+  - `group` opens the "Group Stores" section.
+- `string`: ID of the listing (i.e. `prod_00000000-0000-0000-0000-000000000000`) to open. If you provide an empty string, only the specified store section opens.
+- `string` (Optional): Context for the listing (group ID or world ID) - only needed for opening a listing within a group or world store (i.e., `grp_00000000-0000-0000-0000 000000000000` or `wrld_00000000-0000-0000-0000 000000000000`).
 
 ### Store.SendProductEvent
 Sends the [OnProductEvent](#onproductevent) event to all players in the instance on the target UdonBehaviour.
@@ -137,14 +163,14 @@ Before sending or receiving the networked event, this method checks if the playe
 - `UdonProduct` or `IProduct`: Product that you want to use for the event.
 
 ### Store.ListPurchases
-Sends an [OnListPurchases](#onlistpurchases) event to the target UdonBehaviour with an array of all the purchases made by a target player.
+Sends the [OnListPurchases](#onlistpurchases) event to the target UdonBehaviour with an array of all the purchases made by a target player.
 
 **Input**
 - `UdonBehaviour`: Udon Behaviour that will receive the resulting [OnListPurchases](#onlistpurchases) event.
 - `VRCPlayerApi`: Player that you want to check the purchased products from.
 
 ### Store.ListAvailableProducts
-Sends an [OnListAvailableProducts](#onlistavailableproducts) event to the target UdonBehaviour with an array containing all  products used in the world.
+Sends the [OnListAvailableProducts](#onlistavailableproducts) event to the target UdonBehaviour with an array containing all  products used in the world.
 
 **Input**
 - `UdonBehaviour`: An UdonBehaviour that will receive the resulting [OnListAvailableProducts](#onlistavailableproducts) event.
@@ -152,22 +178,30 @@ Sends an [OnListAvailableProducts](#onlistavailableproducts) event to the target
 ### Store.ListProductOwners
 Sends an [OnListProductOwners](#onlistproductowners) event to the target UdonBehaviour. This event allows you to retrieve the names of all your supporters and, for example, display their user names in your world.
 
-For this event to work properly, you'll first need to enable the ["Owners Names in Udon" setting](/economy/products/udon#getting-udon-products-owners-in-the-sdk) for the Udon product on [VRChat.com](https://vrchat.com/home/marketplace/storefront/products). Otherwise, [OnListProductOwners](#onlistproductowners) will not fire.
+- For this event to work properly, you'll first need to enable the ["Owners Names in Udon" setting](/economy/products/udon#editing-udon-products) for the Udon product on [VRChat.com](https://vrchat.com/home/marketplace/storefront/products). Otherwise, [OnListProductOwners](#onlistproductowners) will not fire.
+- If you are locally testing your world, OnListProductOwners will load the placeholder user names "VRCat, Fred, VRRat" instead of real user names.
+- If your GameObject contains multiple UdonBehaviour components, this event may not work properly.
 
 **Input**
 - `UdonBehaviour`: An UdonBehaviour that will receive the resulting [OnListProductOwners](#onlistproductowners) event.
 - `UdonProduct`: The UdonProduct for which to retrieve the owner's user names.
 
+### VRCOpenMenu.OpenAvatarListing
+Opens the detail/purchase screen of a published avatar in VRChat's main menu.
+
+**Input**
+- `string`: ID of the avatar (i.e. `avtr_00000000-0000-0000-0000-000000000000`)
+
 ## Events
 
-:::info Don't disable your script
+:::warning
 
-If a game object or its Udon behaviour is disabled, it won't execute most of the events related to the Creator Economy.
+If you disable GameObjects or UdonBehaviours, they won't execute most of the events related to the Creator Economy.
 
 :::
 
 ### OnPurchaseConfirmed
-This event is triggered once for any purchase that is received from VRChat servers. Purchases are loaded
+This event is triggered once a player's purchase has been loaded and confirmed. Purchases are loaded in the following situations: 
 - when joining the instance, both for the local player and any other players,
 - when any new players join the instance, and
 - when any player in the instance purchases one of the world's products.
@@ -177,13 +211,32 @@ This event is triggered once for any purchase that is received from VRChat serve
 - `VRCPlayerApi`: The player who has purchased the product.
 - `bool`: `true` if the purchase was just made, `false` if it was made as part of loading the player's purchases upon joining the world.
 
+### OnPurchaseConfirmedMultiple
+
+This event is triggered once a player's purchase has been loaded and confirmed. Purchases are loaded in the following situations: 
+
+- When joining the instance, both for the local player and any other players
+- When any new players join the instance
+- When any player in the instance purchases one of the world's products
+
+**Output**
+- `IProduct`: The product that has been purchased.
+- `VRCPlayerApi`: The player who has purchased the product.
+- `bool`: `true` if the purchase was just made, `false` if it was made as part of loading the player's purchases upon joining the world.
+- `int`: The [quantity](/economy/listings/#quantitypurchases) the user purchased. For [instant](/economy/listings#instant) listings with [quantity purchases](/economy/listings#quantity-purchases) enabled, `quantity` ranges from `1` to `99`. For all other listing types, `quantity` is always `1`.
+
+:::caution
+
+`OnPurchaseConfirmed` is deprecated and does not support [quantity purchases](/economy/listings#quantity-purchases). Never use both `OnPurchaseConfirmed` and `OnPurchaseConfirmedMultiple` in the same script - otherwise, you may accidentally detect the same purchase twice.
+
+:::
+
 ### OnPurchaseExpired
 This event is triggered when the local client detects that one of the products owned by a player in the instance has expired.
 
 **Output**
 - `IProduct`: Product that has expired.
 - `VRCPlayerApi`: The player whose product has expired.
-
 
 ### OnPurchasesLoaded
 This event is triggered when all of a player's purchases have been loaded, either when the local player joins an instance or when another player has joined later.

@@ -1,13 +1,10 @@
----
-title: "State Behaviors"
-slug: "state-behaviors"
-hidden: false
-createdAt: "2020-08-05T22:32:59.268Z"
-updatedAt: "2023-02-08T15:38:26.170Z"
----
+import UnityVersionedLink from '@site/src/components/UnityVersionedLink.js';
+
+# State Behaviors
+
 :::caution Unity Knowledge Required
 
-This document is written with the assumption that you know a bit about [Unity Animators](https://docs.unity3d.com/2019.4/Documentation/Manual/class-AnimatorController.html).
+This document is written with the assumption that you know a bit about <UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/Manual/class-AnimatorController.html">Unity Animators</UnityVersionedLink>.
 :::
 When you've got a specific state selected in the Animator view, you'll be able to add State Behaviors. They're a bit like components for states. They do different things. Try adding them, and you'll see what they can do!
 
@@ -17,7 +14,7 @@ State behaviors *should* run no matter how long the state machine remains in the
 
 :::caution
 
-The term "should" is deliberately used here, as in the [Unity documentation](https://docs.unity3d.com/2019.4/Documentation/Manual/StateMachineBehaviours.html) does not define any guarantee that state behaviors will execute given very small transition or state durations.
+The term "should" is deliberately used here, as in the <UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/Manual/StateMachineBehaviours.html">Unity documentation</UnityVersionedLink> does not define any guarantee that state behaviors will execute given very small transition or state durations.
 
 If you wanted to be **completely** safe, ensure the total time spent in the state containing the state behavior and any transitions directly to that state is a minimum of 0.02 seconds-- although in practice, this doesn't seem to be required.
 
@@ -25,7 +22,7 @@ If you wanted to be **completely** safe, ensure the total time spent in the stat
 
 ## Animator Layer Controller
 
-![Unity_2020-07-08_12-50-04.png](/img/avatars/state-behaviors-e78eb77-Unity_2020-07-08_12-50-04.png)
+![VRC Animator Layer Control component](/img/avatars/state-behaviours/animator-layer-control.png)
 
 The Animator Layer Control allows you to blend the weight of a specific Animator Layer inside any given Playable Layer over any given time.
 
@@ -44,7 +41,7 @@ The layer weight will remain until some other state runs this State Behavior aga
 
 ## Animator Locomotion Control
 
-![state-behaviors-f6f3250-Unity_2020-07-08_13-16-13.png](/img/avatars/state-behaviors-f6f3250-Unity_2020-07-08_13-16-13.png)
+![VRC Animator Locomotion Control component](/img/avatars/state-behaviours/animator-locomotion-control.png)
 
 The Animator Locomotion Control allows you to disable locomotion in a given state of an animator. The Locomotion state will remain until some other state runs this State Behavior again and changes it.
 
@@ -56,7 +53,8 @@ In Desktop mode, this disables translational movement, and restricts rotational 
 | Debug String | When this StateBehavior runs, this string will be printed to the output log. Useful for debugging. |
 
 ## Animator Temporary Pose Space
-![state-behaviors-467daaf-Unity_2020-07-14_21-38-14.png](/img/avatars/state-behaviors-467daaf-Unity_2020-07-14_21-38-14.png)
+
+![VRC Animator Temporary Pose Space component](/img/avatars/state-behaviours/animator-temporary-pose-space.png)
 
 The Animator Temporary Pose Space control allows you to move the viewpoint of the person wearing the avatar to the head at that given point of the animator state.
 
@@ -80,7 +78,7 @@ This state behavior **will not execute** if the state this behavior is on is exi
 
 ## Animator Tracking Control
 
-![state-behaviors-076baca-Unity_2020-07-08_13-26-00.png](/img/avatars/state-behaviors-076baca-Unity_2020-07-08_13-26-00.png)
+![VRC Animator Tracking Control component](/img/avatars/state-behaviours/animator-tracking-control.png)
 
 The Animator Tracking Control allows you to enable or disable IK or simulated movement on various different parts of the avatar body. Setting the option to "No Change" will not change the body part from its current value. "Tracking" will set it to following IK or simulated movement. "Animation" will force that body part to respect values as given by the avatar's Animator.
 
@@ -142,6 +140,10 @@ Random will set the Destination Parameter to a random number between Min Value a
 
 As the component points out, using Random may not produce the same result when run on a remote instance of the avatar. When using Random, it is suggested to use a synced Destination Parameter and only run the driver locally.
 
+When using a Boolean parameter, you can use the Chance variable to set the probability that the parameter will be set to true.
+
+When using an Int parameter, you can use the Prevent Repeats setting to prevent the same value being picked twice in a row.
+
 ![state-behaviors-99c6248-2022-06-02_18-11-23_Unity.png](/img/avatars/state-behaviors-99c6248-2022-06-02_18-11-23_Unity.png)
 
 ### Copy
@@ -167,8 +169,8 @@ You can also use the `Convert Range` checkbox to enable some additional UI that 
 
 ## Playable Layer Control
 
-![state-behaviors-33760a2-Unity_2020-07-08_13-36-13.png](/img/avatars/state-behaviors-33760a2-Unity_2020-07-08_13-36-13.png)
-        
+![VRC Animator Layer Control component](/img/avatars/state-behaviours/animator-playable-layer-control.png)
+
 The Playable Layer Control allows you to blend the weight of the entire Playable Layer to a specified value over specified duration. Very similar to Animator Layer Control, but instead controls the entire Playable Layer.
 
 The Action Playable layer will use this State Behavior often, as the Action layer has weight zero by default, and should always be blended back to zero after the animation is complete.
@@ -191,7 +193,7 @@ The "Animator Play Audio" behavior modifies an AudioSource when transitioning to
 The relative path of the AudioSource (i.e. `Armature/Hips/Spine/`) must be entered into the "Source Path" property. This property can be filled out automatically by selecting an audio source component. If the audio source is on the root of the avatar, "Source Path" should be blank.
 
 
-The "Playback order" property does not guarantee that audio clips are played in the same order for all players. For example, the "Random" setting may choose a different clip for each player. If you want to guarantee that all players hear the same clip, use multiple animation states or change "Playback Order" to "Parameter" in conjunction with a synced animator parameter. 
+**The "Playback order" property does not guarantee that audio clips are played in the same order for all players.** For example, the "Random" setting may choose a different clip for each player. If you want to guarantee that all players hear the same clip, use multiple animation states or change "Playback Order" to "Parameter" in conjunction with a synced animator parameter. 
 
 "Animator Play Audio" can be added to states inside a sub-state machine. However, adding it to the sub-state machine itself is not recommended. The state behavior will be applied for every state transition in the sub-state machine, which may cause unintended interactions with other state behaviors.
 
@@ -203,8 +205,8 @@ The "Playback order" property does not guarantee that audio clips are played in 
 | Random Volume | The random volume that is applied to the AudioSource when transitioning to this state. Clamped from 0 to 1.<br/>• Min: The minimum random volume. (Default: 1)<br/>• Max: The maximum random volume. (Default: 1) |
 | Random Pitch | The random pitch that is applied to the AudioSource when transitioning to this state. Clamped from -3 to 3.<br/>• Min: The minimum random pitch. (Default: 1)<br/>• Max: The maximum random pitch. (Default: 1) |
 | Loop | Whether the AudioSource's looping should be set enabled or disabled when transitioning to this state. |
-| On Enter | Whether to start or stop the AudioSource when transitioning into this state. Executed before "On Exit".<br/>🗹 Stop Audio Source (Default: Enabled)<br/>🗹 Play Audio Source (Default: Enabled) |
-| On Exit | Whether to start or stop the AudioSource when transitioning into this state. Executed before "On Enter".<br/>☐ Stop Audio Source (Default: Disabled)<br/>☐ Play Audio Source (Default: Disabled) |
+| On Enter | Whether to start or stop the AudioSource when transitioning into this state.<br/>🗹 Stop Audio Source (Default: Enabled)<br/>🗹 Play Audio Source (Default: Enabled) |
+| On Exit | Whether to start or stop the AudioSource when transitioning out of this state.<br/>☐ Stop Audio Source (Default: Disabled)<br/>☐ Play Audio Source (Default: Disabled) |
 | Play On Enter Delay In Seconds | The delay before "Play On Enter" plays a clip, if enabled. Clamped from 0 to 60 seconds. (Default: 0 seconds) |
 
 Each audio setting has an additional property. By default, it's set to "Apply If Stopped". This prevents the setting from being applied if the audio source has not finished playing its previous clip and "Stop Audio Source On Enter" is disabled.

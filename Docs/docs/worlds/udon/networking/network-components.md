@@ -1,26 +1,26 @@
----
-title: "Network Components"
-slug: "network-components"
-createdAt: "2021-05-13T17:19:13.691Z"
-updatedAt: "2023-02-26T20:26:03.564Z"
----
+import UnityVersionedLink from '@site/src/components/UnityVersionedLink.js';
+
+# Network Components
+
 This doc covers Networking Components, Properties and Events you can use in your Udon Programs.
 
 ## Networking Properties
 
 Special properties you can *get* from Networking:
 
-**IsClogged** - returns true if there is too much data trying to get out. You can use this to hold off some operations or adjust your logic.
+| Property name    | Description |
+| ---------------- | ----------- |
+| LocalPlayer      | Returns the [VRC Player API](/worlds/udon/players) object of the local player. |
+| IsInstanceOwner  | Returns `true` for the instance creator in Invite, Invite+, Friends, and Friends+ instances.<br />Always returns `false` in Group instances, Public instances, and the SDK's "Build & Test" mode. |
+| InstanceOwner    | Returns the [VRC Player API](/worlds/udon/players) object of the player who owns the instance. If the owner is currently not in the instance, this returns `null` instead. If the owner returns, it returns the instance owner again.<br />The instance owner has special moderation permissions. Instance ownership never changes.
+| IsMaster         | Returns `true` if the local player is the [instance master](/worlds/udon/networking/#the-instance-master). The master is the default owner for networked game objects.<br/>You should not use this for security or gating access to your world. Use `IsInstanceOwner` or implement a moderation system instead. |
+| Master           | Returns the [VRC Player API](/worlds/udon/players) object of the player who is the current instance master. Is always valid. |
+| IsNetworkSettled | Returns `true` if all the data in the instance has been deserialized, applied, and is ready for use. |
+| IsClogged        | Returns `true` if there is too much data trying to get out. You can use this to wait until the network is unclogged or to adjust your logic. |
+| SimulationTime   | Returns the current simulation time of a player or object with networking components. See below for more details. |
 
-**IsInstanceOwner** - returns true if the Local Player is the one who created the instance. False when in Build & Test and Unity Playmode.
+### Simulation time
 
-**IsMaster** - returns true if the Local Player is the 'Master' - either the first person who entered the instance or the person automatically designated as Master when the last Master left. Old logic, not recommended for use. IsOwner should be used instead.
-
-**IsNetworkSettled** - returns true once all the data in the instance has been deserialized and applied, and it's ready for use.
-
-**LocalPlayer** - returns the [VRC Player API](/worlds/udon/players) object of the local player. Will be null in the editor - use Utilities.IsValid to easily branch your logic on this.
-
-**SimulationTime** - returns the current simulation time of a player or object with networking components.
 Simulation time is a timestamp that refers to how far back in time an object is simulated. This value is used internally for [`VRCObjectSync`](/worlds/udon/networking/network-components#vrc-object-sync) and [players](/worlds/udon/players#simulationtime), but can be used in Udon scripts as well. For example, if your ` Time.realtimeSinceStartup ` is 45 and the SimulationTime of an object is 44.5, then VRChat believes 500ms of delay is necessary to smoothly replicate the object at that moment. You can use that number to learn some information about what `VRCObjectSync` is doing, or to create your own system similar to `VRCObjectSync`. For example, if you do `Time.realTimeSinceStartup - SimulationTime(player)` then that will tell you exactly how much latency that player has at that moment.
  
 Simulation time is frequently adjusted depending on network conditions, including many factors such as latency, reliability, and frequency of the packets being received. The goal of this adjustment is to be as close to real-time as possible to reduce latency, but to leave enough room to prevent hitching. There are a variety of factors that can cause hitching, but one example can be running out of received packets from the owner.
@@ -39,11 +39,12 @@ This event triggers when sync data has been transformed from bytes back into usa
 Same as OnDeserialization, but with additional information about the time at which the request was sent and received.
 
 #### DeserializationResult
-`DeserializationResult` contains two properties:
+`DeserializationResult` contains three properties:
 - `sendTime`: The time in seconds at which this message was sent.
 - `receiveTime`: The time in seconds at which this message was received.
+- `isFromStorage`: If true, then the included data was restored from storage rather than received from other realtime clients.
 
-Both `sendTime` and `receiveTime` measure based on the time in seconds since VRChat has started, from your perspective (see [Time.realtimeSinceStartup](https://docs.unity3d.com/2019.4/Documentation/ScriptReference/Time-realtimeSinceStartup.html)). This means that if you want to know how many seconds ago a certain Deserialization was sent, you can calculate it with `Time.realtimeSinceStartup - sendTime`.
+Both `sendTime` and `receiveTime` measure based on the time in seconds since VRChat has started, from your perspective (see <UnityVersionedLink versionKey="minor" url="https://docs.unity3d.com/<VERSION>/Documentation/ScriptReference/Time-realtimeSinceStartup.html">Time.realtimeSinceStartup</UnityVersionedLink>). This means that if you want to know how many seconds ago a certain Deserialization was sent, you can calculate it with `Time.realtimeSinceStartup - sendTime`.
 
 Note that every user's `Time.realtimeSinceStartup` is different, so one player's `sendTime` is going to be different from another player's `sendTime`. As a result, if you want to sync a specific `sendTime` to other players, you will need to calculate its offset by subtracting your `Time.realtimeSinceStartup`. Then, when the other players receive that offset, they can add back their own `Time.realtimeSinceStartup` to the offset in order to determine the absolute time relative to their own clock.
 
@@ -56,10 +57,15 @@ This event triggers just after an attempt was made to send serialized data. It r
 This event is deprecated - use the typical OnEnabled event if you want to do something when an object is 'Spawned' from the pool.
 
 ### OnOwnershipRequest
-This event is triggered when someone has requested to take ownership. It includes the Player Objects for the Requester and the Requested Owner. To approve or deny the change, set a boolean value into a "Set Return Value" node. This logic runs locally on both the requester and the owner, so be aware that disagreements in logic between the two will cause a desync. This is most likely to be expressed by the ownership transfer being unexpectedly rejected by the owner.
+This event is triggered when someone has requested to take ownership. It includes the PlayerObjects for the Requester and the Requested Owner. To approve or deny the change, set a boolean value into a "Set Return Value" node. This logic runs locally on both the requester and the owner, so be aware that disagreements in logic between the two will cause a desync. This is most likely to be expressed by the ownership transfer being unexpectedly rejected by the owner.
 
 ### OnOwnershipTransferred
-This event is triggered for everyone in the instance when an objects ownership is changed, and includes the Player Object for the new owner.
+This event is triggered for everyone in the instance when an objects ownership is changed, and includes the PlayerObject for the new owner.
+
+### OnMasterTransferred
+This event is triggered for everyone in the instance when the instance master changes because the previous instance master has left the instance.
+It includes one parameter, `newMaster,` which is the [VRC Player API](/worlds/udon/players) object of the player that has become master. This parameter is always valid.
+For the first user joining a new instance, this event will trigger after `OnPlayerJoined` to indicate that the master state was transferred from "nobody".
 
 ### OnVariableChanged
 This is a special type of event that you can create for any variable. In Udon Graph, you create it by dragging and dropping a variable into the graph while holding alt. This event detects when the variable changes, which can include when you receive synced variables from other players. 

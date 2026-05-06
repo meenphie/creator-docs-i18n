@@ -34,8 +34,8 @@ const config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
-          editUrl: `https://github.com/vrchat-community/creator-docs/edit/main/Docs/`,
-          editLocalizedFiles: true,
+          editUrl: ({versionDocsDirPath, docPath}) =>
+              `https://github.com/vrchat-community/creator-docs/edit/main/Docs/docs/${docPath}`,
           showLastUpdateTime: true,
         },
         blog: {
@@ -45,7 +45,7 @@ const config = {
           blogDescription: 'The latest VRChat SDK releases and patch notes.',
           showReadingTime: false,
           blogSidebarTitle: 'History',
-          blogSidebarCount: 'ALL'
+          blogSidebarCount: 'ALL',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
@@ -88,7 +88,7 @@ const config = {
           {to: 'releases', label: 'Releases', position: 'left'},
           {to: 'https://udonsharp.docs.vrchat.com', label: 'UdonSharp', position: 'right'},
           {to: 'https://vcc.docs.vrchat.com', label: 'Creator Companion', position: 'right'},
-          {to: 'https://clientsim.docs.vrchat.com', label: 'ClientSim', position: 'right'},
+          {to: 'worlds/clientsim', label: 'ClientSim', position: 'right'},
           {type: 'localeDropdown', position: 'right'},
         ],
       },
@@ -106,14 +106,22 @@ const config = {
           {
             title: 'Tools',
             items: [
-              { to: 'https://udonsharp.docs.vrchat.com', label: 'UdonSharp' },
-              { to: 'https://vcc.docs.vrchat.com', label: 'Creator Companion' },
-              { to: 'https://clientsim.docs.vrchat.com', label: 'ClientSim' },
+              {to: 'https://udonsharp.docs.vrchat.com', label: 'UdonSharp'},
+              {to: 'https://vcc.docs.vrchat.com', label: 'Creator Companion'},
+              {to: 'worlds/clientsim', label: 'ClientSim'},
             ],
           },
           {
             title: 'Community',
             items: [
+              {
+                label: 'Ask Forum',
+                href: 'https://ask.vrchat.com/',
+              },
+              {
+                label: 'Bluesky',
+                href: 'https://bsky.app/profile/vrchat.com',
+              },
               {
                 label: 'Discord',
                 href: 'https://discord.com/invite/vrchat',
@@ -130,6 +138,10 @@ const config = {
               {
                 label: 'Releases',
                 to: '/releases',
+              },
+              {
+                label: 'Roadmap',
+                to: '/roadmap',
               },
             ],
           },

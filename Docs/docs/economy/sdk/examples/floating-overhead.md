@@ -1,19 +1,29 @@
 ---
-title: "Floating Overhead Buy Indicator"
+description: "A floating indicator above players who own an Udon product."
+sidebar_custom_props:
+    customIcon: 👑
 ---
+
+# Floating Overhead Buy Indicator
 
 import SellerNotification from '/docs/economy/_sellers-notification.mdx';
 
 <SellerNotification/>
 
+1. Open [the Example Central Window](https://vrc-beta-docs.netlify.app/sdk/example-central) from the window from the Unity Editor Menu under "VRChat SDK > 🏠 Example Central"
+2. If you haven't yet specifically made examples visible yet:
+	1. Press the ⚙️ gear icon in the Example Central window to open Example Central settings.
+    2. Enable "Show Creator Economy Examples".
+3. Find this prefab in the list or search for it by title (same as the title of this page).
+4. Press the "Import" button to import the Unitypackage into your project.
+
 Floating Overhead Buy Indicator is a prefab that spawns an indicator over a player's head once they have purchased something. Customize it in various ways to highlight your supporters.
 
 ![FloatingPrefab](/img/economy/examples/BuyIndicator-FloatingPrefab.png "Shows what a Floating Obj looks like over a players head.")
 
-### How to Import
-1. Download the [Unity package directly by clicking here](https://cdn.sanity.io/files/yvg0vlb9/production/44b4e129593cff2c69c2809e0e432bec7390c271.unitypackage).
-2. Make sure your project is using the World SDK `3.5.0`or newer.
-3. Import the Unity package into your project.
+import HowToImportExample from '/docs/economy/_ce-how-to-import.mdx';
+
+<HowToImportExample/>
 
 ##### Prefabs Included
 * **FloatingOverheadBuyIndicatorPrefab**: A script that adds the `FloatingObjectPrefab` above players who own the `ExampleProduct`.
@@ -26,7 +36,7 @@ If viewing the example scene, you'll also need the [Open Group Page](/economy/sd
 
 ### How to Use
 
-For this (and most!) prefabs, you'll first need an UdonProduct to check for and a way for players to subscribe to this product. 
+For this (and most!) prefabs, you'll first need an UdonProduct to check for and a way for players to purchase this product. 
 
 Once you've created a purchasable product:
 
@@ -49,7 +59,7 @@ Once you've created a purchasable product:
 5. If you'd like the player to be able to look up and see their own indicator, leave **Show Indicator Above Local Player** enabled. Disable it if otherwise.
 
 <div class="video-container">
-    <iframe src="/img/economy/examples/BuyIndicator-ShowIndicatorAboveLocalPlayer.mp4" title="Overhead Indicator" frameborder="0" allow="encrypted-media; gyroscope; web-share" allowfullscreen></iframe>
+    <iframe src="https://assets.vrchat.com/videos/docs/BuyIndicator-ShowIndicatorAboveLocalPlayer.mp4" title="Overhead Indicator" frameborder="0" allow="encrypted-media; gyroscope; web-share" allowfullscreen></iframe>
 </div>
 
 6. Run Build & Test!
