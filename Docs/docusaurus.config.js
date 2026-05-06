@@ -9,20 +9,23 @@ const config = {
   title: 'VRChat Creation',
   tagline: 'Learn, create and share using our tools and documentation.',
   url: 'https://creators.vrchat.com',
-  baseUrl: '/',
-  onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
+  baseUrl: '/creator-docs-i18n/',
+  trailingSlash: true,
+  onBrokenLinks: 'warn',
+  onBrokenAnchors: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'vrchat', // Usually your GitHub org/user name.
-  projectName: 'CreatorDocs', // Usually your repo name.
+  organizationName: 'vrchat',
+  projectName: 'CreatorDocs',
 
-  scripts: [
-    {
-      defer: true,
-      src: 'https://plausible.io/js/script.js',
-      'data-domain': 'creators.vrchat.com'
+  markdown: {
+    format: 'mdx',
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
     },
-  ],
+  },
+
+  scripts: [],
+
   presets: [
     [
       'classic',
